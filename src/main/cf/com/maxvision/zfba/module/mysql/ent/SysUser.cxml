@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xobject>
+  <types>
+    <type id="t1">codefactory.client.module.vo.Entity</type>
+    <type id="t2">codefactory.client.module.vo.BaseTable</type>
+    <type id="t3">codefactory.client.module.vo.Column</type>
+    <type id="t4">codefactory.client.module.vo.Rectangle</type>
+    <type id="t5">codefactory.client.module.vo.Key</type>
+  </types>
+  <obj id="1" type="t1">
+    <guid>6a423c99-137e-4544-b244-bffa9706430d</guid>
+    <dbGuid>f2243c4b-824b-4fb1-917b-2ce819021c9c</dbGuid>
+    <dbType>mysql</dbType>
+    <datasourceName>sky_dream</datasourceName>
+    <name>SysUser</name>
+    <comment></comment>
+    <nsMod>com.maxvision.zfba.module.ent</nsMod>
+    <nsCsMod>EPolice.Client.Module.Ent</nsCsMod>
+    <nsDao>com.maxvision.zfba.dao.ent</nsDao>
+    <baseTable ref="2"/>
+    <joinList/>
+    <relationList/>
+    <methodList/>
+    <sumMethodList/>
+    <customColumnList/>
+  </obj>
+  <obj id="2" type="t2">
+    <filter></filter>
+    <tableName>sys_user</tableName>
+    <alias>s</alias>
+    <columnList>
+      <item ref="3"/>
+      <item ref="4"/>
+      <item ref="5"/>
+      <item ref="6"/>
+      <item ref="7"/>
+      <item ref="8"/>
+      <item ref="9"/>
+      <item ref="10"/>
+      <item ref="11"/>
+      <item ref="12"/>
+      <item ref="13"/>
+      <item ref="14"/>
+      <item ref="15"/>
+      <item ref="16"/>
+    </columnList>
+    <bounds ref="17"/>
+    <isBase>true</isBase>
+    <isView>false</isView>
+    <pk ref="18"/>
+  </obj>
+  <obj id="3" type="t3">
+    <table ref="2"/>
+    <columnName>create_time</columnName>
+    <comment>创建时间</comment>
+    <columnType>TIMESTAMP</columnType>
+    <isChecked>true</isChecked>
+    <isNullable>true</isNullable>
+    <isIdentity>false</isIdentity>
+    <javaType>java.util.Date</javaType>
+    <csType>DateTime?</csType>
+  </obj>
+  <obj id="4" type="t3">
+    <table ref="2"/>
+    <columnName>user_name</columnName>
+    <comment>用户昵称</comment>
+    <columnType>VARCHAR</columnType>
+    <isChecked>true</isChecked>
+    <isNullable>true</isNullable>
+    <isIdentity>false</isIdentity>
+    <javaType>String</javaType>
+    <csType>string</csType>
+  </obj>
+  <obj id="5" type="t3">
+    <table ref="2"/>
+    <columnName>sex</columnName>
+    <comment>用户性别（0男 1女 2未知）</comment>
+    <columnType>CHAR</columnType>
+    <isChecked>true</isChecked>
+    <isNullable>true</isNullable>
+    <isIdentity>false</isIdentity>
+    <javaType>String</javaType>
+    <csType>string</csType>
+  </obj>
+  <obj id="6" type="t3">
+    <table ref="2"/>
+    <columnName>phonenumber</columnName>
+    <comment>手机号码</comment>
+    <columnType>VARCHAR</columnType>
+    <isChecked>true</isChecked>
+    <isNullable>true</isNullable>
+    <isIdentity>false</isIdentity>
+    <javaType>String</javaType>
+    <csType>string</csType>
+  </obj>
+  <obj id="7" type="t3">
+    <table ref="2"/>
+    <columnName>remark</columnName>
+    <comment>备注</comment>
+    <columnType>VARCHAR</columnType>
+    <isChecked>true</isChecked>
+    <isNullable>true</isNullable>
+    <isIdentity>false</isIdentity>
+    <javaType>String</javaType>
+    <csType>string</csType>
+  </obj>
+  <obj id="8" type="t3">
+    <table ref="2"/>
+    <columnName>login_ip</columnName>
+    <comment>最后登陆IP</comment>
+    <columnType>VARCHAR</columnType>
+    <isChecked>true</isChecked>
+    <isNullable>true</isNullable>
+    <isIdentity>false</isIdentity>
+    <javaType>String</javaType>
+    <csType>string</csType>
+  </obj>
+  <obj id="9" type="t3">
+    <table ref="2"/>
+    <columnName>password</columnName>
+    <comment>密码</comment>
+    <columnType>VARCHAR</columnType>
+    <isChecked>true</isChecked>
+    <isNullable>true</isNullable>
+    <isIdentity>false</isIdentity>
+    <javaType>String</javaType>
+    <csType>string</csType>
+  </obj>
+  <obj id="10" type="t3">
+    <table ref="2"/>
+    <columnName>update_time</columnName>
+    <comment>更新时间</comment>
+    <columnType>TIMESTAMP</columnType>
+    <isChecked>true</isChecked>
+    <isNullable>true</isNullable>
+    <isIdentity>false</isIdentity>
+    <javaType>java.util.Date</javaType>
+    <csType>DateTime?</csType>
+  </obj>
+  <obj id="11" type="t3">
+    <table ref="2"/>
+    <columnName>login_name</columnName>
+    <comment>登录账号</comment>
+    <columnType>VARCHAR</columnType>
+    <isChecked>true</isChecked>
+    <isNullable>false</isNullable>
+    <isIdentity>false</isIdentity>
+    <javaType>String</javaType>
+    <csType>string</csType>
+  </obj>
+  <obj id="12" type="t3">
+    <table ref="2"/>
+    <columnName>post_id</columnName>
+    <comment>岗位ID</comment>
+    <columnType>VARCHAR</columnType>
+    <isChecked>true</isChecked>
+    <isNullable>true</isNullable>
+    <isIdentity>false</isIdentity>
+    <javaType>String</javaType>
+    <csType>string</csType>
+  </obj>
+  <obj id="13" type="t3">
+    <table ref="2"/>
+    <columnName>user_id</columnName>
+    <comment>用户ID</comment>
+    <columnType>VARCHAR</columnType>
+    <isChecked>true</isChecked>
+    <isNullable>false</isNullable>
+    <isIdentity>false</isIdentity>
+    <javaType>String</javaType>
+    <csType>string</csType>
+  </obj>
+  <obj id="14" type="t3">
+    <table ref="2"/>
+    <columnName>role_id</columnName>
+    <comment>角色ID</comment>
+    <columnType>VARCHAR</columnType>
+    <isChecked>true</isChecked>
+    <isNullable>true</isNullable>
+    <isIdentity>false</isIdentity>
+    <javaType>String</javaType>
+    <csType>string</csType>
+  </obj>
+  <obj id="15" type="t3">
+    <table ref="2"/>
+    <columnName>dept_id</columnName>
+    <comment>部门ID</comment>
+    <columnType>VARCHAR</columnType>
+    <isChecked>true</isChecked>
+    <isNullable>true</isNullable>
+    <isIdentity>false</isIdentity>
+    <javaType>String</javaType>
+    <csType>string</csType>
+  </obj>
+  <obj id="16" type="t3">
+    <table ref="2"/>
+    <columnName>email</columnName>
+    <comment>用户邮箱</comment>
+    <columnType>VARCHAR</columnType>
+    <isChecked>true</isChecked>
+    <isNullable>true</isNullable>
+    <isIdentity>false</isIdentity>
+    <javaType>String</javaType>
+    <csType>string</csType>
+  </obj>
+  <obj id="17" type="t4">
+    <x>50</x>
+    <y>50</y>
+    <width>213</width>
+    <height>185</height>
+  </obj>
+  <obj id="18" type="t5">
+    <columnList>
+      <item ref="13"/>
+    </columnList>
+  </obj>
+</xobject>

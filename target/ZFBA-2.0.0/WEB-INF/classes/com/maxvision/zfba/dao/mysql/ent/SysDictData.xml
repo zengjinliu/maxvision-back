@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--datasource=sky_dream-->
+<mapper namespace="com.maxvision.zfba.dao.ent.SysDictDataMapper">
+  <resultMap id="baseResultMap" type="com.maxvision.zfba.module.ent.SysDictData">
+	<id column="s_dict_code" jdbcType="VARCHAR" property="dictCode" />
+	<result column="s_dict_type" jdbcType="VARCHAR" property="dictType" />
+	<result column="s_update_time" jdbcType="TIMESTAMP" property="updateTime" />
+	<result column="s_create_time" jdbcType="TIMESTAMP" property="createTime" />
+	<result column="s_dict_value" jdbcType="VARCHAR" property="dictValue" />
+	<result column="s_remark" jdbcType="VARCHAR" property="remark" />
+	<result column="s_dict_label" jdbcType="VARCHAR" property="dictLabel" />
+  </resultMap>
+  <sql id="exampleWhereClause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and (${criterion.condition})
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value${criterion.jdbcTypeDesc}}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value${criterion.jdbcTypeDesc}} and #{criterion.secondValue${criterion.jdbcTypeDesc}}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem${criterion.jdbcTypeDesc}}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="baseColumnList">
+  	 s.`dict_type` as s_dict_type
+  	, s.`update_time` as s_update_time
+  	, s.`create_time` as s_create_time
+  	, s.`dict_value` as s_dict_value
+  	, s.`remark` as s_remark
+  	, s.`dict_code` as s_dict_code
+  	, s.`dict_label` as s_dict_label
+  </sql>
+  <select id="getByPrimaryKey" parameterType="map" resultMap="baseResultMap">
+    select
+    <include refid="baseColumnList" />
+    from 
+    	`sys_dict_data` s
+    where
+    	 s.`dict_code` = #{dictCode, jdbcType=VARCHAR}
+  </select>
+  <select id="selectByExample" parameterType="com.maxvision.core.mybatis.QueryExample" resultMap="baseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="baseColumnList" />
+    from 
+    	`sys_dict_data` s
+    <if test="_parameter != null">
+      <include refid="exampleWhereClause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from `sys_dict_data`
+    where
+    	 `dict_code` = #{dictCode, jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.maxvision.core.mybatis.QueryExample">
+    delete from `sys_dict_data`
+    <if test="_parameter != null">
+      <include refid="exampleWhereClause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.maxvision.zfba.module.ent.SysDictData">
+    insert into `sys_dict_data` (
+		 `dict_type`
+		, `update_time`
+		, `create_time`
+		, `dict_value`
+		, `remark`
+		, `dict_code`
+		, `dict_label`
+    )  values (
+		 #{dictType,jdbcType=VARCHAR}
+		, #{updateTime,jdbcType=TIMESTAMP}
+		, #{createTime,jdbcType=TIMESTAMP}
+		, #{dictValue,jdbcType=VARCHAR}
+		, #{remark,jdbcType=VARCHAR}
+		, #{dictCode,jdbcType=VARCHAR}
+		, #{dictLabel,jdbcType=VARCHAR}
+    )
+  </insert>
+  <select id="countByExample" parameterType="com.maxvision.core.mybatis.QueryExample" resultType="java.lang.Integer">
+    select count(*) 
+    from 
+    	`sys_dict_data` s
+    <if test="_parameter != null">
+      <include refid="exampleWhereClause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKey" parameterType="map">
+    update 
+    	`sys_dict_data`
+    set 
+		`dict_type` = #{record.dictType,jdbcType=VARCHAR}
+		 ,`update_time` = #{record.updateTime,jdbcType=TIMESTAMP}
+		 ,`create_time` = #{record.createTime,jdbcType=TIMESTAMP}
+		 ,`dict_value` = #{record.dictValue,jdbcType=VARCHAR}
+		 ,`remark` = #{record.remark,jdbcType=VARCHAR}
+		 ,`dict_label` = #{record.dictLabel,jdbcType=VARCHAR}
+    where
+    	 `dict_code` = #{record.dictCode, jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="map">
+    update 
+    	`sys_dict_data`
+    <set> 
+		<if test="record.dictType != null">
+			`dict_type` = #{record.dictType,jdbcType=VARCHAR},
+		</if>
+		<if test="record.updateTime != null">
+			`update_time` = #{record.updateTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="record.createTime != null">
+			`create_time` = #{record.createTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="record.dictValue != null">
+			`dict_value` = #{record.dictValue,jdbcType=VARCHAR},
+		</if>
+		<if test="record.remark != null">
+			`remark` = #{record.remark,jdbcType=VARCHAR},
+		</if>
+		<if test="record.dictLabel != null">
+			`dict_label` = #{record.dictLabel,jdbcType=VARCHAR},
+		</if>
+	</set>
+    where
+    	 `dict_code` = #{record.dictCode, jdbcType=VARCHAR}
+ </update>
+</mapper>

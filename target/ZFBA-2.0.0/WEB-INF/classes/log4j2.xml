@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorInterval="30">
+	<Properties>
+		<property name="prjName">zfba</property>
+		<Property name="baseDir">D:/data/${prjName}/logs</Property>
+	</Properties>
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="[%t] %d{yy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} %L - %msg%n"/>
+		</Console>
+		<RollingFile name="RollingFile" fileName="${baseDir}/${prjName}.log" filePattern="${baseDir}/${prjName}_%d{yyyy-MM-dd}.log">
+			<PatternLayout pattern="[%t] %d{yy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} %L - %msg%n" />
+			<Policies>
+				<OnStartupTriggeringPolicy />
+				<TimeBasedTriggeringPolicy />
+			</Policies>
+			<DefaultRolloverStrategy>
+				<Delete basePath="${baseDir}">
+					<IfFileName glob="${prjName}_*.log" />
+					<IfLastModified age="14d" />
+				</Delete>
+			</DefaultRolloverStrategy>
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Logger name="ognl" level="error" />
+		<Logger name="com.maxvision.core" level="info" />
+		<logger name="com.maxvision.core.tasks" level="error" />
+		<Logger name="org.apache.ibatis" level="debug" />
+		<logger name="com.maxvision.${prjName}.dao" level="debug" />
+		<Root level="debug">
+			<AppenderRef ref="Console"/>
+			<AppenderRef ref="RollingFile"/>
+		</Root>
+	</Loggers>
+</Configuration>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+                      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0" metadata-complete="true">
+	<display-name>ecustom web interface</display-name>
+	<listener>
+		<listener-class>com.maxvision.zfba.servlet.AppDispacherContextListener</listener-class>
+	</listener>
+	<!-- 虽然官网说servlet3.0会自动扫描，但由于框架原因，需要按2.5的说明配置log4j2
+        参考 http://logging.apache.org/log4j/2.x/manual/webapp.html -->
+	<listener>
+		<listener-class>org.apache.logging.log4j.web.Log4jServletContextListener</listener-class>
+	</listener>
+	<filter>
+		<filter-name>log4jServletFilter</filter-name>
+		<filter-class>org.apache.logging.log4j.web.Log4jServletFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>log4jServletFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+		<dispatcher>ERROR</dispatcher>
+		<dispatcher>ASYNC</dispatcher>
+	</filter-mapping>
+	<context-param>
+		<param-name>isLog4jAutoInitializationDisabled</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<!--axis配置-->
+	<!--
+	<servlet>  
+		<servlet-name>AxisServlet</servlet-name>  
+		<servlet-class>org.apache.axis.transport.http.AxisServlet</servlet-class>  
+	</servlet>  
+	<servlet-mapping>  
+		<servlet-name>AxisServlet</servlet-name>  
+		<url-pattern>/services/*</url-pattern>  
+	</servlet-mapping> 
+	-->
+
+
+</web-app>

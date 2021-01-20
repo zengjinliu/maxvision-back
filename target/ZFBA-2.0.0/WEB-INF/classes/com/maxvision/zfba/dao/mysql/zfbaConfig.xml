@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<plugins>
+		<plugin interceptor="com.maxvision.core.mybatis.plugin.OffsetLimitInterceptor">
+			<property name="dialectClass" value="com.maxvision.core.mybatis.dialect.MySQLDialect"/>
+		</plugin>
+	</plugins>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+				<property name="driver" value="${db.driver}"/>
+				<property name="url" value="${db.url}"/>
+				<property name="username" value="${db.account}"/>
+				<property name="password" value="${db.password}"/>
+				<property name="poolPingEnabled" value="true"/>
+				<property name="poolPingQuery" value="select now()"/>
+			</dataSource>
+		</environment>
+	</environments>
+
+	<mappers>
+		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysCaptcha.xml" />
+		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysDictData.xml" />
+		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysDictType.xml" />
+		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysMenu.xml" />
+		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysRole.xml" />
+		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysRoleMenu.xml" />
+		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysUser.xml" />
+		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysUserRole.xml" />
+	</mappers>
+
+</configuration>

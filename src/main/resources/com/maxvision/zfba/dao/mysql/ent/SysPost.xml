@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--datasource=sky_dream-->
+<mapper namespace="com.maxvision.zfba.dao.ent.SysPostMapper">
+  <resultMap id="baseResultMap" type="com.maxvision.zfba.module.ent.SysPost">
+	<id column="s_post_id" jdbcType="VARCHAR" property="postId" />
+	<result column="s_update_time" jdbcType="TIMESTAMP" property="updateTime" />
+	<result column="s_create_time" jdbcType="TIMESTAMP" property="createTime" />
+	<result column="s_post_name" jdbcType="VARCHAR" property="postName" />
+	<result column="s_post_code" jdbcType="VARCHAR" property="postCode" />
+	<result column="s_remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="exampleWhereClause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and (${criterion.condition})
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value${criterion.jdbcTypeDesc}}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value${criterion.jdbcTypeDesc}} and #{criterion.secondValue${criterion.jdbcTypeDesc}}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem${criterion.jdbcTypeDesc}}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="baseColumnList">
+  	 s.`update_time` as s_update_time
+  	, s.`post_id` as s_post_id
+  	, s.`create_time` as s_create_time
+  	, s.`post_name` as s_post_name
+  	, s.`post_code` as s_post_code
+  	, s.`remark` as s_remark
+  </sql>
+  <select id="getByPrimaryKey" parameterType="map" resultMap="baseResultMap">
+    select
+    <include refid="baseColumnList" />
+    from 
+    	`sys_post` s
+    where
+    	 s.`post_id` = #{postId, jdbcType=VARCHAR}
+  </select>
+  <select id="selectByExample" parameterType="com.maxvision.core.mybatis.QueryExample" resultMap="baseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="baseColumnList" />
+    from 
+    	`sys_post` s
+    <if test="_parameter != null">
+      <include refid="exampleWhereClause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from `sys_post`
+    where
+    	 `post_id` = #{postId, jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.maxvision.core.mybatis.QueryExample">
+    delete from `sys_post`
+    <if test="_parameter != null">
+      <include refid="exampleWhereClause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.maxvision.zfba.module.ent.SysPost">
+    insert into `sys_post` (
+		 `update_time`
+		, `post_id`
+		, `create_time`
+		, `post_name`
+		, `post_code`
+		, `remark`
+    )  values (
+		 #{updateTime,jdbcType=TIMESTAMP}
+		, #{postId,jdbcType=VARCHAR}
+		, #{createTime,jdbcType=TIMESTAMP}
+		, #{postName,jdbcType=VARCHAR}
+		, #{postCode,jdbcType=VARCHAR}
+		, #{remark,jdbcType=VARCHAR}
+    )
+  </insert>
+  <select id="countByExample" parameterType="com.maxvision.core.mybatis.QueryExample" resultType="java.lang.Integer">
+    select count(*) 
+    from 
+    	`sys_post` s
+    <if test="_parameter != null">
+      <include refid="exampleWhereClause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKey" parameterType="map">
+    update 
+    	`sys_post`
+    set 
+		`update_time` = #{record.updateTime,jdbcType=TIMESTAMP}
+		 ,`create_time` = #{record.createTime,jdbcType=TIMESTAMP}
+		 ,`post_name` = #{record.postName,jdbcType=VARCHAR}
+		 ,`post_code` = #{record.postCode,jdbcType=VARCHAR}
+		 ,`remark` = #{record.remark,jdbcType=VARCHAR}
+    where
+    	 `post_id` = #{record.postId, jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="map">
+    update 
+    	`sys_post`
+    <set> 
+		<if test="record.updateTime != null">
+			`update_time` = #{record.updateTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="record.createTime != null">
+			`create_time` = #{record.createTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="record.postName != null">
+			`post_name` = #{record.postName,jdbcType=VARCHAR},
+		</if>
+		<if test="record.postCode != null">
+			`post_code` = #{record.postCode,jdbcType=VARCHAR},
+		</if>
+		<if test="record.remark != null">
+			`remark` = #{record.remark,jdbcType=VARCHAR},
+		</if>
+	</set>
+    where
+    	 `post_id` = #{record.postId, jdbcType=VARCHAR}
+ </update>
+</mapper>

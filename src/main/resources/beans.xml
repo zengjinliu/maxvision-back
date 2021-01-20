@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.maxvision.com/core/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://maxvision.eicp.net/core/beans classpath:/com/maxvision/core/ioc/support/xml/beans.xsd">
+    <component-scan base-package="com.maxvision.zfba.controller"/>
+    <component-scan base-package="com.maxvision.zfba.service"/>
+    <mvc view-path="/WEB-INF/view" view-encoding="UTF-8"/>
+
+    <bean id="fileRenamePolicy" class="com.maxvision.core.web.multipart.DefaultFileRenamePolicy"/>
+    <bean id="multipartConf" class="com.maxvision.core.web.multipart.MultipartConf">
+        <property name="location" value="D:/data/zfba/temp"/>
+        <property name="maxFileSize" value="5073741824"/>
+        <property name="maxRequestSize" value="5073741824"/>
+        <property name="fileSizeThreshold" value="307200"/>
+        <property name="fileRenamePolicy" ref="fileRenamePolicy"/>
+    </bean>
+    <bean id="servletConf" class="com.maxvision.core.web.servlet.DispacherServletConf">
+        <property name="staticMappings" value="/ui/**"/>
+        <property name="staticHeaders" value="Cache-Control:max-age=86400"/>
+        <property name="multipart" ref="multipartConf"/>
+    </bean>
+
+
+	<!-- 拦截器 --> 
+    <bean id="securityInterceptor" class="com.maxvision.zfba.interceptor.SecurityInterceptor">
+        <property name="loginURL" value="/login"/>
+        <property name="errorURL" value="/error"/>
+        <property name="operatorLogService" ref="com.maxvision.zfba.service.sys.SysOperatorLogService" inject="byType" />
+    </bean>
+    <interceptors>
+        <interceptor>
+            <mapping paths="/**" excludes="/error,/login"/>
+            <ref bean="securityInterceptor"/>
+        </interceptor>
+    </interceptors>
+    <!-- freemarker 视图配置  -->
+    <bean id="freemarkerFunctions" class="com.maxvision.core.web.freemarker.FreemarkerFunctions"/>
+    <bean class="com.maxvision.core.web.freemarker.FreemarkerConfig">
+        <property name="outputEncoding" value="UTF-8"/>
+        <property name="locale" value="zh_CN"/>
+        <property name="localizedLookup" value="false"/>
+        <property name="templateUpdateDelay" value="10"/>
+        <property name="dateFormat" value="yyyy-MM-dd"/>
+        <property name="timeFormat" value="HH:mm"/>
+        <property name="datetimeFormat" value="yyyy-MM-dd HH:mm:ss"/>
+        <property name="numberFormat" value="0.######"/>
+        <property name="requestAttributeName" value="request"/>
+        <property name="sessionAttributeName" value="session"/>
+        <property name="freemarkerVariables">
+            <map>
+                <entry key="functions">
+                    <value>
+                        <ref bean="freemarkerFunctions"/>
+                    </value>
+                </entry>
+                <entry key="mediaHost" value="${CONTEXT_PATH}/ui"/>
+                <entry key="jsRoot" value="${mediaHost}/js"/>
+                <entry key="cssRoot" value="${mediaHost}/css"/>
+                <entry key="imageRoot" value="${mediaHost}/images"/>
+                <entry key="mainTitle" value="智能审讯监管平台"/>
+                <entry key="staticVersion" value="V_1.0.1"/>
+            </map>
+        </property>
+    </bean>
+</beans>

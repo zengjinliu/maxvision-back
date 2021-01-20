@@ -1,0 +1,10 @@
+{
+"cluster": false,
+"masterName": "mymaster",
+"maxTotal": 2048,
+"maxIdle": 400,
+"maxWait": 2000,
+"testOnBorrow": true,
+"testOnReturn": true,
+"urls": "redis://127.0.0.1:6379/0"
+}

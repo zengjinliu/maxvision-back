@@ -1,0 +1,7 @@
+{
+	"checkAuth": "0",
+	"apps": {
+		"maxvision": {"password": "18B41960F47CD54E2682685F3DAEC26F", "prefixes": ["53"]},
+		"zhongj": {"password":"72E0692C2E14DFD4A1ECFF251EC57B74", "prefixes":["5304", "5320"]}
+	}
+}

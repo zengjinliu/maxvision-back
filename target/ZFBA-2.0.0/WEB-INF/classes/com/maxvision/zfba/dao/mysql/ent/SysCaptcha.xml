@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--datasource=sky_dream-->
+<mapper namespace="com.maxvision.zfba.dao.ent.SysCaptchaMapper">
+  <resultMap id="baseResultMap" type="com.maxvision.zfba.module.ent.SysCaptcha">
+	<id column="s_uuid" jdbcType="VARCHAR" property="uuid" />
+	<result column="s_code" jdbcType="VARCHAR" property="code" />
+	<result column="s_expire_time" jdbcType="TIMESTAMP" property="expireTime" />
+  </resultMap>
+  <sql id="exampleWhereClause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and (${criterion.condition})
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value${criterion.jdbcTypeDesc}}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value${criterion.jdbcTypeDesc}} and #{criterion.secondValue${criterion.jdbcTypeDesc}}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem${criterion.jdbcTypeDesc}}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="baseColumnList">
+  	 s.`code` as s_code
+  	, s.`expire_time` as s_expire_time
+  	, s.`uuid` as s_uuid
+  </sql>
+  <select id="getByPrimaryKey" parameterType="map" resultMap="baseResultMap">
+    select
+    <include refid="baseColumnList" />
+    from 
+    	`sys_captcha` s
+    where
+    	 s.`uuid` = #{uuid, jdbcType=VARCHAR}
+  </select>
+  <select id="selectByExample" parameterType="com.maxvision.core.mybatis.QueryExample" resultMap="baseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="baseColumnList" />
+    from 
+    	`sys_captcha` s
+    <if test="_parameter != null">
+      <include refid="exampleWhereClause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from `sys_captcha`
+    where
+    	 `uuid` = #{uuid, jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.maxvision.core.mybatis.QueryExample">
+    delete from `sys_captcha`
+    <if test="_parameter != null">
+      <include refid="exampleWhereClause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.maxvision.zfba.module.ent.SysCaptcha">
+    insert into `sys_captcha` (
+		 `code`
+		, `expire_time`
+		, `uuid`
+    )  values (
+		 #{code,jdbcType=VARCHAR}
+		, #{expireTime,jdbcType=TIMESTAMP}
+		, #{uuid,jdbcType=VARCHAR}
+    )
+  </insert>
+  <select id="countByExample" parameterType="com.maxvision.core.mybatis.QueryExample" resultType="java.lang.Integer">
+    select count(*) 
+    from 
+    	`sys_captcha` s
+    <if test="_parameter != null">
+      <include refid="exampleWhereClause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKey" parameterType="map">
+    update 
+    	`sys_captcha`
+    set 
+		`code` = #{record.code,jdbcType=VARCHAR}
+		 ,`expire_time` = #{record.expireTime,jdbcType=TIMESTAMP}
+    where
+    	 `uuid` = #{record.uuid, jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="map">
+    update 
+    	`sys_captcha`
+    <set> 
+		<if test="record.code != null">
+			`code` = #{record.code,jdbcType=VARCHAR},
+		</if>
+		<if test="record.expireTime != null">
+			`expire_time` = #{record.expireTime,jdbcType=TIMESTAMP},
+		</if>
+	</set>
+    where
+    	 `uuid` = #{record.uuid, jdbcType=VARCHAR}
+ </update>
+</mapper>

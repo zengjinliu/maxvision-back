@@ -1,0 +1,7 @@
+{
+  "isAddressEnable":true,
+  "imagePath": "D:/root/zfba/images/",
+  "faceServerUrl": "http://192.168.110.249/mvfr",
+  "faceScore": 0.85,
+  "socketUrl": "ws://192.168.110.150:8888/kurento"
+}
