@@ -4,10 +4,7 @@ import com.maxvision.core.client.net.RequestMethod;
 import com.maxvision.core.ioc.annotation.Inject;
 import com.maxvision.core.server.pub.MapperContext;
 import com.maxvision.core.web.View;
-import com.maxvision.core.web.ui.annotation.Controller;
-import com.maxvision.core.web.ui.annotation.MapperParam;
-import com.maxvision.core.web.ui.annotation.RequestMapping;
-import com.maxvision.core.web.ui.annotation.RequestParam;
+import com.maxvision.core.web.ui.annotation.*;
 
 import com.maxvision.zfba.module.ent.SysMenu;
 import com.maxvision.zfba.module.vo.TreeNode;
@@ -32,12 +29,21 @@ public class SysMenuController {
      * 获取左侧菜单栏数据
      * @return
      */
-    @RequestMapping(value = "/getNavList",method = RequestMethod.GET)
+    @RequestMapping(value = "/queryTreeMenu",method = RequestMethod.GET)
     public View getSideMenu(@MapperParam(DBS.datasource)MapperContext mc,
                             @RequestParam("userId")String userId){
         List<TreeNode<SysMenu>> menu = sysMenuService.getSideMenu(mc, userId);
         return AjaxResultView.success(menu);
     }
+
+    @RequestMapping(value = "/add",method = RequestMethod.POST,action = "新增菜单")
+    public View add(@MapperParam(DBS.datasource)MapperContext mc,
+                    @RequestBody SysMenu sysMenu){
+        int save = sysMenuService.save(mc,sysMenu);
+        return AjaxResultView.response(save);
+    }
+
+
 
 
 }

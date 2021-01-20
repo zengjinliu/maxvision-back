@@ -1,5 +1,6 @@
 package com.maxvision.zfba.service.sys;
 
+import com.maxvision.core.client.utils.RandomUtils;
 import com.maxvision.core.ioc.annotation.Component;
 import com.maxvision.core.mybatis.QueryExample;
 import com.maxvision.core.server.pub.MapperContext;
@@ -14,6 +15,7 @@ import com.maxvision.zfba.module.ent.SysUser;
 import com.maxvision.zfba.module.vo.TreeNode;
 import com.maxvision.zfba.util.CommonUtils;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -38,6 +40,15 @@ public class SysMenuService {
         }
         return this.getSideMenuByRole(mc, userId);
     }
+
+    public int save(MapperContext mc, SysMenu sysMenu){
+        SysMenuMapper mapper = mc.getMapper(SysMenuMapper.class);
+        sysMenu.setMenuId(RandomUtils.randomUUID());
+        sysMenu.setCreateTime(new Date());
+        return mapper.insert(sysMenu);
+    }
+
+
 
     public List<SysMenu> query(MapperContext mc, SysMenu sysMenu) {
         SysMenuMapper mapper = mc.getMapper(SysMenuMapper.class);
