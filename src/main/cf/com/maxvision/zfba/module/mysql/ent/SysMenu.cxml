@@ -9,7 +9,7 @@
     <type id="t5">codefactory.client.module.vo.Key</type>
   </types>
   <obj id="1" type="t1">
-    <guid>0d01a1fa-2d9d-4632-bd9a-b546d59aa2cf</guid>
+    <guid>0a43dae4-f1e8-4562-9d93-38f375f9cd71</guid>
     <dbGuid>f2243c4b-824b-4fb1-917b-2ce819021c9c</dbGuid>
     <dbType>mysql</dbType>
     <datasourceName>sky_dream</datasourceName>
@@ -40,12 +40,11 @@
       <item ref="10"/>
       <item ref="11"/>
       <item ref="12"/>
-      <item ref="13"/>
     </columnList>
-    <bounds ref="14"/>
+    <bounds ref="13"/>
     <isBase>true</isBase>
     <isView>false</isView>
-    <pk ref="15"/>
+    <pk ref="14"/>
   </obj>
   <obj id="3" type="t3">
     <table ref="2"/>
@@ -137,17 +136,6 @@
   </obj>
   <obj id="11" type="t3">
     <table ref="2"/>
-    <columnName>type</columnName>
-    <comment>菜单类型(0菜单，1表示操作)</comment>
-    <columnType>CHAR</columnType>
-    <isChecked>true</isChecked>
-    <isNullable>true</isNullable>
-    <isIdentity>false</isIdentity>
-    <javaType>String</javaType>
-    <csType>string</csType>
-  </obj>
-  <obj id="12" type="t3">
-    <table ref="2"/>
     <columnName>menu_id</columnName>
     <comment>菜单ID</comment>
     <columnType>VARCHAR</columnType>
@@ -157,7 +145,7 @@
     <javaType>String</javaType>
     <csType>string</csType>
   </obj>
-  <obj id="13" type="t3">
+  <obj id="12" type="t3">
     <table ref="2"/>
     <columnName>url</columnName>
     <comment>请求地址</comment>
@@ -168,15 +156,15 @@
     <javaType>String</javaType>
     <csType>string</csType>
   </obj>
-  <obj id="14" type="t4">
+  <obj id="13" type="t4">
     <x>50</x>
     <y>50</y>
     <width>213</width>
     <height>185</height>
   </obj>
-  <obj id="15" type="t5">
+  <obj id="14" type="t5">
     <columnList>
-      <item ref="12"/>
+      <item ref="11"/>
     </columnList>
   </obj>
 </xobject>

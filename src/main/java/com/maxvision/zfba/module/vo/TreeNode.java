@@ -2,16 +2,20 @@ package com.maxvision.zfba.module.vo;
 
 import com.maxvision.core.client.utils.CollectionUtils;
 import com.maxvision.core.client.utils.StringUtils;
+import com.maxvision.zfba.module.ent.SysMenu;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author minte
  * @date 2020/12/12 17:34
  */
-public class TreeNode<T> implements Serializable {
+public class TreeNode<T> implements Serializable, Comparable<TreeNode<T>> {
     private static final long serialVersionUID = -4531621317121278348L;
     /**节点Id*/
     private String id;
@@ -21,14 +25,14 @@ public class TreeNode<T> implements Serializable {
     private String name;
     /**节点icon*/
     private String icon;
-    /**节点类型(0菜单，1操作)*/
-    private String type;
     /**节点链接*/
     private String url;
     /**节点数据*/
     private T nodeData;
     /**是否为叶子节点*/
     private boolean isLeaf = true;
+    /**排序号*/
+    private Integer orderNum;
     /**子级节点*/
     private List<TreeNode<T>> children = new ArrayList<TreeNode<T>>();
 
@@ -78,6 +82,66 @@ public class TreeNode<T> implements Serializable {
         return tops;
     }
 
+
+    /**
+     * 从低到高排序
+     * @param nodes
+     * @param <T>
+     * @return
+     */
+    public static <T> List<TreeNode<T>> sortedNatural(List<TreeNode<T>> nodes){
+        List<TreeNode<T>> treeNodes = buildTree(nodes);
+        if(treeNodes == null){
+            return null;
+        }
+        return sortTree(treeNodes);
+    }
+
+    /**
+     * 从高到低排序
+     * @param nodes
+     * @param <T>
+     * @return
+     */
+    public static <T> List<TreeNode<T>> sortedReversed(List<TreeNode<T>> nodes){
+        List<TreeNode<T>> treeNodes = buildTree(nodes);
+        if(treeNodes == null){
+            return null;
+        }
+        return sortTree1(treeNodes);
+    }
+
+    private static <T> List<TreeNode<T>> sortTree(List<TreeNode<T>> nodes){
+        List<TreeNode<T>> list = sort(nodes);
+        list.stream().forEach(e->{
+            if(!CollectionUtils.isEmpty(e.getChildren())){
+                e.setChildren(e.getChildren().stream().sorted(Comparator.naturalOrder()).collect(Collectors.toList()));
+                sortTree(e.getChildren());
+            }
+        });
+        return list;
+    }
+    private static <T> List<TreeNode<T>> sortTree1(List<TreeNode<T>> nodes){
+        List<TreeNode<T>> list = sort1(nodes);
+        list.stream().forEach(e->{
+            if(!CollectionUtils.isEmpty(e.getChildren())){
+                e.setChildren(e.getChildren().stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList()));
+                sortTree(e.getChildren());
+            }
+        });
+        return list;
+    }
+
+
+    private static <T> List<TreeNode<T>> sort(List<TreeNode<T>> nodes) {
+        List<TreeNode<T>> list = nodes.stream().sorted(Comparator.naturalOrder()).collect(Collectors.toList());
+        return list;
+    }
+
+    private static <T> List<TreeNode<T>> sort1(List<TreeNode<T>> nodes) {
+        List<TreeNode<T>> list = nodes.stream().sorted(Comparator.reverseOrder()).collect(Collectors.toList());
+        return list;
+    }
 
     public String getId() {
         return id;
@@ -143,11 +207,18 @@ public class TreeNode<T> implements Serializable {
         this.url = url;
     }
 
-    public String getType() {
-        return type;
+    public Integer getOrderNum() {
+        return orderNum;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setOrderNum(Integer orderNum) {
+        this.orderNum = orderNum;
     }
+
+    @Override
+    public int compareTo(TreeNode<T> o) {
+        Integer orderNum = o.getOrderNum();
+        return this.orderNum.compareTo(orderNum);
+    }
+
 }

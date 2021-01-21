@@ -43,7 +43,25 @@ public class SysMenuController {
         return AjaxResultView.response(save);
     }
 
+    @RequestMapping(value = "/del",method = RequestMethod.GET,action = "删除菜单")
+    public View del(@MapperParam(DBS.datasource)MapperContext mc,
+                    @RequestParam("menuId")String menuId){
+        int del = sysMenuService.deleteByMenuId(mc,menuId);
+        return AjaxResultView.response(del);
+    }
 
+    @RequestMapping(value = "/id",method = RequestMethod.GET,action = "查询菜单")
+    public View queryByMenuId(@MapperParam(DBS.datasource)MapperContext mc,
+                    @RequestParam("menuId")String menuId){
+        SysMenu sysMenu = sysMenuService.queryByMenuId(mc,menuId);
+        return AjaxResultView.success(sysMenu);
+    }
 
+    @RequestMapping(value = "/update",method = RequestMethod.POST,action = "更新菜单")
+    public View update(@MapperParam(DBS.datasource)MapperContext mc,
+                              @RequestBody SysMenu sysMenu){
+        int update = sysMenuService.update(mc,sysMenu);
+        return AjaxResultView.response(update);
+    }
 
 }

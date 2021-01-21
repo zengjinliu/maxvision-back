@@ -1,5 +1,6 @@
 package com.maxvision.zfba.service.sys;
 
+import com.maxvision.core.client.utils.CollectionUtils;
 import com.maxvision.core.client.utils.RandomUtils;
 import com.maxvision.core.ioc.annotation.Component;
 import com.maxvision.core.mybatis.QueryExample;
@@ -15,6 +16,7 @@ import com.maxvision.zfba.module.ent.SysUser;
 import com.maxvision.zfba.module.vo.TreeNode;
 import com.maxvision.zfba.util.CommonUtils;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -73,10 +75,10 @@ public class SysMenuService {
             node.setNodeData(menu);
             node.setIcon(menu.getIcon());
             node.setUrl(menu.getUrl());
-            node.setType(menu.getType());
+            node.setOrderNum(menu.getOrderNum());
             return node;
         }).collect(Collectors.toList());
-        return TreeNode.buildTree(nodeList);
+        return TreeNode.sortedNatural(nodeList);
     }
 
     /**
@@ -111,6 +113,40 @@ public class SysMenuService {
         Set<String> set = roleId.stream().map(roleMapper::getByPrimaryKey).map(SysRole::getMenuId).collect(Collectors.toSet());
         return set.stream().map(mapper::getByPrimaryKey).collect(Collectors.toList());
     }
+
+    /**
+     * 根据主键删除菜单
+     * @param id 菜单id
+     * @return
+     */
+    public int deleteByMenuId(MapperContext mc, String id) {
+        SysMenuMapper mapper = mc.getMapper(SysMenuMapper.class);
+        return mapper.deleteByPrimaryKey(id);
+    }
+
+    /**
+     * 根据主键查询菜单
+     * @param mc
+     * @param menuId
+     * @return
+     */
+    public SysMenu queryByMenuId(MapperContext mc, String menuId) {
+        SysMenuMapper mapper = mc.getMapper(SysMenuMapper.class);
+        return mapper.getByPrimaryKey(menuId);
+    }
+
+    /**
+     * 根据主键更新菜单
+     * @param mc
+     * @param sysMenu
+     * @return
+     */
+    public int update(MapperContext mc, SysMenu sysMenu) {
+        SysMenuMapper mapper = mc.getMapper(SysMenuMapper.class);
+        sysMenu.setUpdateTime(new Date());
+        return mapper.updateByPrimaryKey(sysMenu);
+    }
+
 
 
 }
