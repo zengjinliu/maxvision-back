@@ -15,8 +15,8 @@ import com.maxvision.zfba.view.AjaxResultView;
 import java.util.List;
 
 /**
+ * 系统菜单控制器
  * @author minte
- * @date 2021/1/15 22:46
  */
 @Controller
 @RequestMapping("/sys/menu")

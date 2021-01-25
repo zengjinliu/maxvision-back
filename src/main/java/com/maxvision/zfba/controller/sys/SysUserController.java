@@ -20,8 +20,8 @@ import java.util.List;
 
 
 /**
+ * 系统用户控制器
  * @author minte
- * @date 2021/1/15 8:43
  */
 @Controller
 @RequestMapping("/sys/user")
@@ -53,8 +53,8 @@ public class SysUserController {
     }
 
     @RequestMapping(value = "/id")
-    public View id(@MapperParam(DBS.datasource) MapperContext mc, @RequestParam("id") String id) {
-        SysUser user = sysUserService.queryByPrimaryKey(mc, id);
+    public View id(@MapperParam(DBS.datasource) MapperContext mc, @RequestParam("userId") String userId) {
+        SysUser user = sysUserService.queryByPrimaryKey(mc, userId);
         return AjaxResultView.success(user);
     }
 

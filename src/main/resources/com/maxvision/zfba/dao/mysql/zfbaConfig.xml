@@ -26,10 +26,10 @@
 		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysDictData.xml" />
 		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysDictType.xml" />
 		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysMenu.xml" />
+		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysDept.xml" />
 		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysRole.xml" />
-		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysRoleMenu.xml" />
 		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysUser.xml" />
-		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysUserRole.xml" />
+		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysPost.xml" />
 	</mappers>
 
 </configuration>

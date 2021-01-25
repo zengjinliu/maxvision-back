@@ -24,7 +24,6 @@ import java.util.Map;
  * aes+base64加密模式
  *
  * @author minte
- * @date 2020/12/24 13:39
  */
 @Controller
 @RequestMapping("/sys/image")

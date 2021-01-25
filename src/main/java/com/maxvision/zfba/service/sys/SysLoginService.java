@@ -11,15 +11,11 @@ import com.maxvision.zfba.module.dto.LoginFormDto;
 import com.maxvision.zfba.module.ent.SysUser;
 import com.maxvision.zfba.view.AjaxResultView;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 /**
  * @author minte
- * @date 2021/1/14 21:02
  */
 @Component
 public class SysLoginService {

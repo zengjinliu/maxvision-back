@@ -25,7 +25,6 @@ import com.maxvision.zfba.service.sys.SysLoginService;
  *   如果返回的是视图，统一使用FreeMarkerView实例
  * 登陆控制器
  * @author minte
- * @date 2020/10/23 16:52
  */
 @Controller
 @RequestMapping("/sys")

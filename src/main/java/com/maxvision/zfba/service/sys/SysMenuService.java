@@ -1,6 +1,5 @@
 package com.maxvision.zfba.service.sys;
 
-import com.maxvision.core.client.utils.CollectionUtils;
 import com.maxvision.core.client.utils.RandomUtils;
 import com.maxvision.core.ioc.annotation.Component;
 import com.maxvision.core.mybatis.QueryExample;
@@ -16,15 +15,11 @@ import com.maxvision.zfba.module.ent.SysUser;
 import com.maxvision.zfba.module.vo.TreeNode;
 import com.maxvision.zfba.util.CommonUtils;
 
-import java.util.Comparator;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * @author minte
- * @date 2021/1/15 22:50
  */
 @Component
 public class SysMenuService {
@@ -110,8 +105,14 @@ public class SysMenuService {
         SysRoleMapper roleMapper = mc.getMapper(SysRoleMapper.class);
         SysMenuMapper mapper = mc.getMapper(SysMenuMapper.class);
         //获取角色对应的所有菜单
-        Set<String> set = roleId.stream().map(roleMapper::getByPrimaryKey).map(SysRole::getMenuId).collect(Collectors.toSet());
-        return set.stream().map(mapper::getByPrimaryKey).collect(Collectors.toList());
+        List<String> list = roleId.stream()
+                .map(roleMapper::getByPrimaryKey)
+                .map(SysRole::getMenuId)
+                .collect(Collectors.toList());
+        List<SysMenu> res = new ArrayList<>();
+        list.forEach(e->CommonUtils.PATTERN.splitAsStream(e)
+            .forEach(menuId->res.add(mapper.getByPrimaryKey(menuId))));
+        return res;
     }
 
     /**

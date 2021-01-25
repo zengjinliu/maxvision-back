@@ -1,14 +1,12 @@
 package com.maxvision.zfba.service.sys;
 
 
-import com.maxvision.core.client.module.vo.PagenateInfo;
 import com.maxvision.core.client.utils.CollectionUtils;
 import com.maxvision.core.client.utils.RandomUtils;
 import com.maxvision.core.client.utils.StringUtils;
 import com.maxvision.core.ioc.annotation.Component;
 import com.maxvision.core.mybatis.QueryExample;
 import com.maxvision.core.server.pub.MapperContext;
-import com.maxvision.core.utils.IocBeanUtils;
 import com.maxvision.zfba.dao.ent.SysUserMapper;
 import com.maxvision.zfba.module.ent.SysUser;
 import com.maxvision.zfba.module.vo.ResultPage;
@@ -17,7 +15,6 @@ import org.apache.ibatis.session.RowBounds;
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author minte
