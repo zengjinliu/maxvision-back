@@ -9,6 +9,7 @@ import com.maxvision.core.web.ui.annotation.Controller;
 import com.maxvision.core.web.ui.annotation.RequestMapping;
 import com.maxvision.core.web.ui.annotation.RequestParam;
 import com.maxvision.core.web.view.ImageView;
+import com.maxvision.zfba.annotation.NoLoginSupport;
 import com.maxvision.zfba.util.AesEncryptUtils;
 import com.maxvision.zfba.util.ImageUtils;
 import com.maxvision.zfba.view.AjaxResultView;
@@ -18,10 +19,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 由于系统将图片存储到本地磁盘，为了便于前端展示</br>
- * 都将本地文件路径进行加密存放到数据库中</br>
- * 前端统一请求由此控制器进行解密并返回imageView展示图片,后端采用
- * aes+base64加密模式
  *
  * @author minte
  */
@@ -37,6 +34,7 @@ public class ImageViewController {
      * @throws Exception
      */
     @RequestMapping(value = "/show",method = RequestMethod.GET)
+    @NoLoginSupport
     public View dealImage(@RequestParam("path") String encryptPath) throws Exception{
         if(StringUtils.isNullOrEmpty(encryptPath)){
             return new ImageView(null);
@@ -54,7 +52,7 @@ public class ImageViewController {
         String path = ImageUtils.saveImgageToLocal(file.get(), "upload");
         Map<String,String> src = new HashMap<>(3);
         src.put("src", sb.toString() + "/sys/image/show?path=" + AesEncryptUtils.encryptReplace(path));
-        return AjaxResultView.success(0,"success",src);
+        return AjaxResultView.success(src);
     }
 
 

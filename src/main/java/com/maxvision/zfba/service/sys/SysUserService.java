@@ -53,8 +53,8 @@ public class SysUserService {
     public List<SysUser> query(MapperContext mc, SysUser sysUser) {
         SysUserMapper mapper = mc.getMapper(SysUserMapper.class);
         QueryExample qe = new QueryExample();
-        qe.or().addCriterion("m.username = ", sysUser.getUserName())
-                .addCriterion("m.login_name = ", sysUser.getLoginName());
+        qe.or().addCriterion("s.user_name = ", sysUser.getUserName());
+        qe.or().addCriterion("s.login_name = ", sysUser.getLoginName());
         return mapper.selectByExample(qe);
     }
 
@@ -76,5 +76,18 @@ public class SysUserService {
         SysUserMapper mapper = mc.getMapper(SysUserMapper.class);
         user.setPassword(StringUtils.md5(user.getPassword()).toLowerCase());
         return mapper.insert(user);
+    }
+
+    /**
+     * 校验登陆账户是否已经存在
+     * @param mc mapper
+     * @param loginName 登陆账户名
+     * @return true 存在，false,不存在
+     */
+    public boolean checkLoginNameExist(MapperContext mc, String loginName) {
+        SysUser user = new SysUser();
+        user.setLoginName(loginName);
+        List<SysUser> list = this.query(mc, user);
+        return !CollectionUtils.isEmpty(list);
     }
 }

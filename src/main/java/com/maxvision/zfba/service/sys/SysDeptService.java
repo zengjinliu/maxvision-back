@@ -51,7 +51,7 @@ public class SysDeptService {
     public List<SysDept> query(MapperContext mc, SysDept sysDept) {
         SysDeptMapper mapper = mc.getMapper(SysDeptMapper.class);
         QueryExample qe = new QueryExample();
-        qe.or().addLikeCriterion("s.dept_name = ", sysDept.getDeptName());
+        qe.or().addLikeCriterion("s.dept_name", sysDept.getDeptName());
         List<SysDept> sysDepts = mapper.selectByExample(qe);
         return sysDepts;
     }
@@ -105,9 +105,19 @@ public class SysDeptService {
     public int update(MapperContext mc, SysDept sysDept) {
         SysDeptMapper mapper = mc.getMapper(SysDeptMapper.class);
         sysDept.setUpdateTime(new Date());
-        return mapper.updateByPrimaryKey(sysDept);
+        return mapper.updateByPrimaryKeySelective(sysDept);
     }
 
-
-
+    /**
+     * 更具部门名称查询部门
+     * @param mc
+     * @param deptName
+     * @return
+     */
+    public List<TreeNode<SysDept>> queryByDeptName(MapperContext mc, String deptName) {
+        SysDept sysDept = new SysDept();
+        sysDept.setDeptName(deptName);
+        List<SysDept> list = this.query(mc, sysDept);
+        return this.getTreeDept(list);
+    }
 }

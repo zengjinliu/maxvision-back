@@ -50,7 +50,7 @@ public class SysMenuService {
     public List<SysMenu> query(MapperContext mc, SysMenu sysMenu) {
         SysMenuMapper mapper = mc.getMapper(SysMenuMapper.class);
         QueryExample qe = new QueryExample();
-        qe.or().addLikeCriterion("s.menu_name = ", sysMenu.getMenuName());
+        qe.or().addLikeCriterion("s.menu_name", sysMenu.getMenuName());
         List<SysMenu> sysMenus = mapper.selectByExample(qe);
         return sysMenus;
     }
@@ -145,9 +145,19 @@ public class SysMenuService {
     public int update(MapperContext mc, SysMenu sysMenu) {
         SysMenuMapper mapper = mc.getMapper(SysMenuMapper.class);
         sysMenu.setUpdateTime(new Date());
-        return mapper.updateByPrimaryKey(sysMenu);
+        return mapper.updateByPrimaryKeySelective(sysMenu);
     }
 
-
-
+    /**
+     * 根据菜单名查询菜单
+     * @param mc
+     * @param menuName
+     * @return
+     */
+    public List<TreeNode<SysMenu>> queryByMenuName(MapperContext mc, String menuName) {
+        SysMenu menu = new SysMenu();
+        menu.setMenuName(menuName);
+        List<SysMenu> list = this.query(mc, menu);
+        return this.getSideMenu(list);
+    }
 }

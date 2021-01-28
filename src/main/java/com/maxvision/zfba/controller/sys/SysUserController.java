@@ -66,4 +66,10 @@ public class SysUserController {
         return AjaxResultView.response(update);
     }
 
+    @RequestMapping(value = "/checkNameExist",method = RequestMethod.GET)
+    public View checkNameExist(@MapperParam(DBS.datasource) MapperContext mc,@RequestParam("loginName")String loginName){
+        boolean flag = sysUserService.checkLoginNameExist(mc,loginName);
+        return flag?AjaxResultView.response(400,"已存在"):AjaxResultView.success();
+    }
+
 }

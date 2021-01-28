@@ -36,6 +36,13 @@ public class SysMenuController {
         return AjaxResultView.success(menu);
     }
 
+    @RequestMapping(value = "/queryByMenuName",method = RequestMethod.GET)
+    public View queryByMenuName(@MapperParam(DBS.datasource)MapperContext mc,
+                            @RequestParam("menuName")String menuName){
+        List<TreeNode<SysMenu>> menu = sysMenuService.queryByMenuName(mc, menuName);
+        return AjaxResultView.success(menu);
+    }
+
     @RequestMapping(value = "/add",method = RequestMethod.POST,action = "新增菜单")
     public View add(@MapperParam(DBS.datasource)MapperContext mc,
                     @RequestBody SysMenu sysMenu){

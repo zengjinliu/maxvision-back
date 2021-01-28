@@ -62,4 +62,10 @@ public class SysPostController {
         int update = sysPostService.update(mc, post);
         return AjaxResultView.response(update);
     }
+
+    @RequestMapping(value = "/queryAllPost")
+    public View queryAllPost(@MapperParam(DBS.datasource) MapperContext mc) {
+        List<SysPost> posts = sysPostService.query(mc, new SysPost());
+        return AjaxResultView.success(posts);
+    }
 }

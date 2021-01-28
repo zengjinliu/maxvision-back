@@ -34,6 +34,13 @@ public class SysDeptController {
         return AjaxResultView.success(dept);
     }
 
+    @RequestMapping(value = "/queryByDeptName",method = RequestMethod.GET)
+    public View queryByDeptName(@MapperParam(DBS.datasource) MapperContext mc,
+                                @RequestParam("deptName") String deptName){
+        List<TreeNode<SysDept>> dept = sysDeptService.queryByDeptName(mc,deptName);
+        return AjaxResultView.success(dept);
+    }
+
     @RequestMapping(value = "/add",method = RequestMethod.POST,action = "新增部门")
     public View add(@MapperParam(DBS.datasource)MapperContext mc,
                     @RequestBody SysDept sysDept){
