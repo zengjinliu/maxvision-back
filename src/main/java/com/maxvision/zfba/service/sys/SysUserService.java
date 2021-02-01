@@ -5,6 +5,7 @@ import com.maxvision.core.client.utils.CollectionUtils;
 import com.maxvision.core.client.utils.RandomUtils;
 import com.maxvision.core.client.utils.StringUtils;
 import com.maxvision.core.ioc.annotation.Component;
+import com.maxvision.core.ioc.annotation.Inject;
 import com.maxvision.core.mybatis.QueryExample;
 import com.maxvision.core.server.pub.MapperContext;
 import com.maxvision.zfba.dao.ent.SysUserMapper;
@@ -22,6 +23,9 @@ import java.util.List;
  */
 @Component
 public class SysUserService {
+
+    @Inject
+    private SysMenuService sysMenuService;
 
     public ResultPage<List<SysUser>> page(MapperContext mc, SysUserVo userVo) {
         QueryExample query = new QueryExample();
@@ -90,4 +94,6 @@ public class SysUserService {
         List<SysUser> list = this.query(mc, user);
         return !CollectionUtils.isEmpty(list);
     }
+
+
 }

@@ -5,6 +5,7 @@ import com.maxvision.core.ioc.annotation.Inject;
 import com.maxvision.core.server.pub.MapperContext;
 import com.maxvision.core.web.View;
 import com.maxvision.core.web.ui.annotation.*;
+import com.maxvision.zfba.annotation.PermissionCode;
 import com.maxvision.zfba.module.ent.SysDept;
 import com.maxvision.zfba.module.vo.TreeNode;
 import com.maxvision.zfba.pub.DBS;
@@ -41,6 +42,7 @@ public class SysDeptController {
         return AjaxResultView.success(dept);
     }
 
+    @PermissionCode("sys_dept_add")
     @RequestMapping(value = "/add",method = RequestMethod.POST,action = "新增部门")
     public View add(@MapperParam(DBS.datasource)MapperContext mc,
                     @RequestBody SysDept sysDept){
@@ -48,6 +50,7 @@ public class SysDeptController {
         return AjaxResultView.response(save);
     }
 
+    @PermissionCode("sys_dept_del")
     @RequestMapping(value = "/del",method = RequestMethod.GET,action = "删除部门")
     public View del(@MapperParam(DBS.datasource)MapperContext mc,
                     @RequestParam("deptId")String deptId){
@@ -62,6 +65,7 @@ public class SysDeptController {
         return AjaxResultView.success(sysDept);
     }
 
+    @PermissionCode("sys_dept_update")
     @RequestMapping(value = "/update",method = RequestMethod.POST,action = "更新部门")
     public View update(@MapperParam(DBS.datasource)MapperContext mc,
                        @RequestBody SysDept sysDept){

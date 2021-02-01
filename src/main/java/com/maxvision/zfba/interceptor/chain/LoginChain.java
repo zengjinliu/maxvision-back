@@ -1,10 +1,9 @@
 package com.maxvision.zfba.interceptor.chain;
 
-import com.maxvision.core.client.utils.StringUtils;
-import com.maxvision.core.utils.ServletUtils;
+import com.maxvision.core.web.View;
 import com.maxvision.core.web.WebHandler;
 import com.maxvision.zfba.annotation.NoLoginSupport;
-import com.maxvision.zfba.constants.ZyConstant;
+import com.maxvision.zfba.view.AjaxResultView;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,22 +31,21 @@ public class LoginChain extends Chain {
      * 拦截未登录的用户请求
      */
     @Override
-    protected boolean support() {
+    protected View support() {
         //NoLoginSupport注解直接放行：判断方法或class上的NoLoginSupport注解
         Method method = webHandler.getHandlerMetaInfo().getMethod();
         boolean isNoLoginSupport = method.getDeclaringClass().isAnnotationPresent(NoLoginSupport.class)
                 || method.isAnnotationPresent(NoLoginSupport.class);
         if (isNoLoginSupport) {
-            return false;
+            return AjaxResultView.success();
         }
-
-        //1.校验用户session,存在则放行进入下一个责任链，不存在则跳转到登陆页面
+        //1.校验用户session,如果session存在就更新token的时间,如果session失效，返回401
         HttpSession session = request.getSession(false);
         if (session == null || !request.isRequestedSessionIdValid()) {
             logger.info("用户session已失效,请重新登陆");
-            return true;
+            return AjaxResultView.response(401, "session已失效,请重新登陆");
         }
-        return false;
+        return AjaxResultView.success();
     }
 
 

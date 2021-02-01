@@ -4,12 +4,16 @@ import com.maxvision.core.ioc.annotation.Inject;
 import com.maxvision.core.web.ui.annotation.*;
 import com.maxvision.zfba.annotation.NoLoginSupport;
 import com.maxvision.zfba.module.dto.LoginFormDto;
+import com.maxvision.zfba.module.ent.SysUser;
 import com.maxvision.zfba.pub.DBS;
 import com.maxvision.core.client.net.RequestMethod;
 import com.maxvision.core.server.pub.MapperContext;
 import com.maxvision.core.web.View;
 import com.maxvision.zfba.service.sys.SysLoginService;
+import com.maxvision.zfba.view.AjaxResultView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -36,10 +40,29 @@ public class LoginController {
     @NoLoginSupport
     @RequestMapping(value = {"/login"}, method = RequestMethod.POST,action = "")
     public View doLogin(@MapperParam(DBS.datasource) MapperContext mc,
-                        @RequestBody LoginFormDto formDto) {
-        View view = sysLoginService.doLogin(mc, formDto);
+                        @RequestBody LoginFormDto formDto,
+                        HttpServletRequest request,
+                        HttpServletResponse response) {
+        View view = sysLoginService.doLogin(mc, formDto,request,response);
         return view;
     }
+
+
+    @RequestMapping(value = "/logout",method = RequestMethod.GET)
+    public View doLogin(@MapperParam(DBS.datasource) MapperContext mc,
+                        HttpServletRequest request) {
+        sysLoginService.logout(request);
+        return AjaxResultView.success();
+    }
+
+
+    @RequestMapping(value = {"/checkPwd"}, method = RequestMethod.POST,action = "修改密码")
+    public View checkPwd(@MapperParam(DBS.datasource) MapperContext mc,
+                        @RequestBody SysUser sysUser) {
+        View view = sysLoginService.checkPwd(mc, sysUser);
+        return view;
+    }
+
 
 
 }

@@ -8,6 +8,8 @@ import com.maxvision.core.client.utils.SimpleJsonProcessor;
 import com.maxvision.zfba.conf.SysConfig;
 
 import com.maxvision.zfba.module.ent.SysMenu;
+import com.maxvision.zfba.module.ent.SysUser;
+import com.maxvision.zfba.module.vo.CurrentUser;
 import com.maxvision.zfba.util.AesEncryptUtils;
 import org.junit.Test;
 
@@ -127,9 +129,10 @@ public class ApplicationTest {
 
     @Test
     public void test6() throws Exception{
-        List<SysMenu> list = new ArrayList<>();
-        boolean present = true;
-        System.out.println(present);
+        CurrentUser user = CurrentUser.builder().loginId("1").perms(Arrays.asList("1"))
+                .user(new SysUser()).roles(Arrays.asList("123"))
+                .build();
+        System.out.println(user);
     }
 
 

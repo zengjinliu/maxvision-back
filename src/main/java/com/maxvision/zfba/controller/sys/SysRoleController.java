@@ -50,7 +50,7 @@ public class SysRoleController {
         return AjaxResultView.response(delete);
     }
 
-    @PermissionCode("sys_role_edit")
+    @PermissionCode("sys_role_update")
     @RequestMapping(value = "/update", method = RequestMethod.POST, action = "更新用户项")
     public View update(@MapperParam(DBS.datasource) MapperContext mc,
                        @RequestBody SysRole role) {

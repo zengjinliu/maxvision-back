@@ -55,7 +55,7 @@ public class SysPostController {
         return AjaxResultView.success(post);
     }
 
-    @PermissionCode("sys_post_edit")
+    @PermissionCode("sys_post_update")
     @RequestMapping(value = "/update", method = RequestMethod.POST, action = "更新部门项")
     public View update(@MapperParam(DBS.datasource) MapperContext mc,
                        @RequestBody SysPost post) {

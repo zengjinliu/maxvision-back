@@ -6,6 +6,7 @@ import com.maxvision.core.server.pub.MapperContext;
 import com.maxvision.core.web.View;
 import com.maxvision.core.web.ui.annotation.*;
 
+import com.maxvision.zfba.annotation.PermissionCode;
 import com.maxvision.zfba.module.ent.SysMenu;
 import com.maxvision.zfba.module.vo.TreeNode;
 import com.maxvision.zfba.pub.DBS;
@@ -43,6 +44,7 @@ public class SysMenuController {
         return AjaxResultView.success(menu);
     }
 
+    @PermissionCode("sys_menu_add")
     @RequestMapping(value = "/add",method = RequestMethod.POST,action = "新增菜单")
     public View add(@MapperParam(DBS.datasource)MapperContext mc,
                     @RequestBody SysMenu sysMenu){
@@ -50,6 +52,7 @@ public class SysMenuController {
         return AjaxResultView.response(save);
     }
 
+    @PermissionCode("sys_menu_del")
     @RequestMapping(value = "/del",method = RequestMethod.GET,action = "删除菜单")
     public View del(@MapperParam(DBS.datasource)MapperContext mc,
                     @RequestParam("menuId")String menuId){
@@ -64,6 +67,7 @@ public class SysMenuController {
         return AjaxResultView.success(sysMenu);
     }
 
+    @PermissionCode("sys_menu_update")
     @RequestMapping(value = "/update",method = RequestMethod.POST,action = "更新菜单")
     public View update(@MapperParam(DBS.datasource)MapperContext mc,
                               @RequestBody SysMenu sysMenu){

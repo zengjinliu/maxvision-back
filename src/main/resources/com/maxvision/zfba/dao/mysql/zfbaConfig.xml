@@ -30,6 +30,7 @@
 		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysRole.xml" />
 		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysUser.xml" />
 		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysPost.xml" />
+		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysUserToken.xml" />
 	</mappers>
 
 </configuration>

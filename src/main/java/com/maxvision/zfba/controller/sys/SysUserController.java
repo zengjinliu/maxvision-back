@@ -58,7 +58,7 @@ public class SysUserController {
         return AjaxResultView.success(user);
     }
 
-    @PermissionCode("sys_user_edit")
+    @PermissionCode("sys_user_update")
     @RequestMapping(value = "/update", method = RequestMethod.POST, action = "更新用户项")
     public View update(@MapperParam(DBS.datasource) MapperContext mc,
                        @RequestBody SysUser user) {
@@ -72,4 +72,9 @@ public class SysUserController {
         return flag?AjaxResultView.response(400,"已存在"):AjaxResultView.success();
     }
 
+    @RequestMapping(value = "/updatePwd",method = RequestMethod.POST)
+    public View updatePwd(@MapperParam(DBS.datasource) MapperContext mc,@RequestBody SysUser sysUser) {
+        int update = sysUserService.update(mc, sysUser);
+        return AjaxResultView.response(update);
+    }
 }

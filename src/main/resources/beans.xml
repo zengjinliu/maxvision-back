@@ -25,6 +25,7 @@
         <property name="loginURL" value="/login"/>
         <property name="errorURL" value="/error"/>
         <property name="operatorLogService" ref="com.maxvision.zfba.service.sys.SysOperatorLogService" inject="byType" />
+        <property name="sysTokenService" ref="com.maxvision.zfba.service.sys.SysTokenService" inject="byType" />
     </bean>
     <interceptors>
         <interceptor>

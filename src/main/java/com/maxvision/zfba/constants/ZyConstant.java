@@ -19,6 +19,9 @@ public class ZyConstant {
     /**记住我的时长(7天)*/
     public static final int REMEMBER_TTL = 7 * 24 * 60 * 60;
 
+    /**token有效时间20min*/
+    public static final int TOKEN_TIME = 20;
+
     /**系统配置sessionkey*/
     public static final String SESSION_VALID_KEY = "session_valid_time";
 

@@ -1,5 +1,11 @@
 package com.maxvision.zfba.interceptor.chain;
 
+import com.maxvision.core.web.View;
+import com.maxvision.zfba.view.AjaxResult;
+import com.maxvision.zfba.view.AjaxResultView;
+
+
+
 /**
  * 拦截器 -责任链
  * @author minte
@@ -15,18 +21,23 @@ public abstract class Chain {
 	}
 
 	//执行器
-	public boolean action() {
+	public View action() {
 		//true表示拦截，直接返回true
-		if(support()){
-			return true;
+		View support = support();
+		if(support.getClass().isAssignableFrom(AjaxResultView.class)){
+			AjaxResultView view = (AjaxResultView)support;
+			AjaxResult obj = (AjaxResult) view.getObj();
+			if(obj.getCode()!=200){
+				return view;
+			}
 		}
 		//责任链
 		if(next!=null) {
 			return next.action();
 		}
-		return false;
+		return AjaxResultView.success();
 	}
 	
 	//具体实现,  true放行，false拦截
-	abstract protected boolean support();
+	abstract protected View support();
 }

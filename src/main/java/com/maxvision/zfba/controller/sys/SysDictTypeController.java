@@ -37,14 +37,14 @@ public class SysDictTypeController {
         return new JsonView(page);
     }
 
-    @PermissionCode("sys_dict_del")
+    @PermissionCode("sys_dict_type_del")
     @RequestMapping(value = "/del",method = RequestMethod.POST,action = "刪除字典类型项")
     public View delete(@MapperParam(DBS.datasource) MapperContext mc, @RequestBody List<String> dictIds) {
         int delete = sysDictTypeService.delete(mc, dictIds);
         return AjaxResultView.response(delete);
     }
 
-    @PermissionCode("sys_dict_add")
+    @PermissionCode("sys_dict_type_add")
     @RequestMapping(value = "/add", method = RequestMethod.POST, action = "更新字典类型项")
     public View add(@MapperParam(DBS.datasource) MapperContext mc,
                     @RequestBody SysDictType dict) {
@@ -58,7 +58,7 @@ public class SysDictTypeController {
         return AjaxResultView.success(dict);
     }
 
-    @PermissionCode("sys_dict_edit")
+    @PermissionCode("sys_dict_type_edit")
     @RequestMapping(value = "/update", method = RequestMethod.POST, action = "更新字典类型项")
     public View update(@MapperParam(DBS.datasource) MapperContext mc,
                        @RequestBody SysDictType dict) {

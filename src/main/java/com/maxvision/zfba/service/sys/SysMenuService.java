@@ -1,7 +1,9 @@
 package com.maxvision.zfba.service.sys;
 
 import com.maxvision.core.client.utils.RandomUtils;
+import com.maxvision.core.client.utils.StringUtils;
 import com.maxvision.core.ioc.annotation.Component;
+import com.maxvision.core.ioc.annotation.Inject;
 import com.maxvision.core.mybatis.QueryExample;
 import com.maxvision.core.server.pub.MapperContext;
 import com.maxvision.zfba.constants.ZyConstant;
@@ -24,6 +26,8 @@ import java.util.stream.Collectors;
 @Component
 public class SysMenuService {
 
+    @Inject
+    private SysUserService sysUserService;
 
     /**
      * 获取左侧菜单栏
@@ -38,13 +42,12 @@ public class SysMenuService {
         return this.getSideMenuByRole(mc, userId);
     }
 
-    public int save(MapperContext mc, SysMenu sysMenu){
+    public int save(MapperContext mc, SysMenu sysMenu) {
         SysMenuMapper mapper = mc.getMapper(SysMenuMapper.class);
         sysMenu.setMenuId(RandomUtils.randomUUID());
         sysMenu.setCreateTime(new Date());
         return mapper.insert(sysMenu);
     }
-
 
 
     public List<SysMenu> query(MapperContext mc, SysMenu sysMenu) {
@@ -93,6 +96,31 @@ public class SysMenuService {
         return this.getSideMenu(queryByRoleId(mc, roeIds));
     }
 
+    /**
+     * 更具用户id查询所有操作权限
+     *
+     * @param mc
+     * @param userId
+     * @return
+     */
+    public List<String> queryAllPerms(MapperContext mc, String userId) {
+        List<String> perms = new ArrayList<>();
+        if (ZyConstant.SYS_ADMIN_ROLE.equals(userId)) {
+            List<SysMenu> sysMenus = this.query(mc, new SysMenu());
+            sysMenus.stream().map(SysMenu::getPerms)
+                    .filter(e->!StringUtils.isNullOrEmpty(e))
+                    .forEach(e -> perms.addAll(CommonUtils.PATTERN.splitAsStream(e).collect(Collectors.toList())));
+            return perms;
+        }
+        SysUser user = sysUserService.queryByPrimaryKey(mc, userId);
+        List<String> list = Arrays.asList(CommonUtils.PATTERN.split(user.getRoleId()));
+        List<SysMenu> sysMenus = this.queryByRoleId(mc, list);
+        sysMenus.stream().map(SysMenu::getPerms)
+                .filter(e->!StringUtils.isNullOrEmpty(e))
+                .forEach(e -> perms.addAll(CommonUtils.PATTERN.splitAsStream(e).collect(Collectors.toList())));
+        return perms;
+    }
+
 
     /**
      * 根据用户角色查询所有菜单
@@ -110,13 +138,14 @@ public class SysMenuService {
                 .map(SysRole::getMenuId)
                 .collect(Collectors.toList());
         List<SysMenu> res = new ArrayList<>();
-        list.forEach(e->CommonUtils.PATTERN.splitAsStream(e)
-            .forEach(menuId->res.add(mapper.getByPrimaryKey(menuId))));
+        list.forEach(e -> CommonUtils.PATTERN.splitAsStream(e)
+                .forEach(menuId -> res.add(mapper.getByPrimaryKey(menuId))));
         return res;
     }
 
     /**
      * 根据主键删除菜单
+     *
      * @param id 菜单id
      * @return
      */
@@ -127,6 +156,7 @@ public class SysMenuService {
 
     /**
      * 根据主键查询菜单
+     *
      * @param mc
      * @param menuId
      * @return
@@ -138,6 +168,7 @@ public class SysMenuService {
 
     /**
      * 根据主键更新菜单
+     *
      * @param mc
      * @param sysMenu
      * @return
@@ -150,6 +181,7 @@ public class SysMenuService {
 
     /**
      * 根据菜单名查询菜单
+     *
      * @param mc
      * @param menuName
      * @return
