@@ -34,14 +34,14 @@ public class SysLoginInfoController {
     @Inject
     private SysOperatorLogService operatorLogService;
 
-    @RequestMapping(value = "/page",method = RequestMethod.GET)
+    @RequestMapping(value = "/page",method = RequestMethod.POST)
     public View page(@RequestBody SysLoginInfoVo loginLog,
                      @MapperParam(DBS.datasource) MapperContext mc){
         ResultPage<List<SysLoginInfo>> page = loginLogService.page(mc, loginLog);
         return new JsonView(page);
     }
 
-    @RequestMapping(value = "/operate/page",method = RequestMethod.GET)
+    @RequestMapping(value = "/operate/page",method = RequestMethod.POST)
     public View getPageData(@RequestBody SysOperLogVo handlerLog,
                             @MapperParam(DBS.datasource) MapperContext mc){
         ResultPage<List<SysOperLog>> page = operatorLogService.page(mc, handlerLog);
