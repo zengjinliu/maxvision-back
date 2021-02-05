@@ -3,12 +3,12 @@ package com.maxvision.zfba.dao.ent;
 import java.util.List;
 
 import com.maxvision.core.mybatis.QueryExample;
-import com.maxvision.zfba.module.ent.SysCaptcha;
+import com.maxvision.zfba.module.ent.SysLoginInfo;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
-public interface SysCaptchaMapper {
+public interface SysLoginInfoMapper {
 	/**
 	 * count by example
 	 *
@@ -21,7 +21,7 @@ public interface SysCaptchaMapper {
 	 * delete by primary key
 	 * @return
 	 */
-	int deleteByPrimaryKey(@Param("uuid")String uuid);
+	int deleteByPrimaryKey(@Param("infoId")String infoId);
 	
 	/**
 	 * delete by example
@@ -37,14 +37,14 @@ public interface SysCaptchaMapper {
 	 * @param record
 	 * @return
 	 */
-	int insert(SysCaptcha record);
+	int insert(SysLoginInfo record);
 
 	/**
 	 * select by primary key
 	 *
 	 * @return
 	 */
-	SysCaptcha getByPrimaryKey(@Param("uuid")String uuid);
+	SysLoginInfo getByPrimaryKey(@Param("infoId")String infoId);
 	
 	/**
 	 * select by example
@@ -53,7 +53,7 @@ public interface SysCaptchaMapper {
 	 * @param rowBounds
 	 * @return
 	 */
-	List<SysCaptcha> selectByExample(QueryExample example, RowBounds rowBounds);
+	List<SysLoginInfo> selectByExample(QueryExample example, RowBounds rowBounds);
 
 	/**
 	 * select by example
@@ -61,19 +61,19 @@ public interface SysCaptchaMapper {
 	 * @param example
 	 * @return
 	 */
-	List<SysCaptcha> selectByExample(QueryExample example);
+	List<SysLoginInfo> selectByExample(QueryExample example);
 	
 	/**
 	 * update by primary key
 	 *
 	 * @return
 	 */
-	int updateByPrimaryKey(@Param("record") SysCaptcha record);
+	int updateByPrimaryKey(@Param("record") SysLoginInfo record);
 	
 	/**
 	 * update by primary key selective
 	 *
 	 * @return
 	 */
-	int updateByPrimaryKeySelective(@Param("record") SysCaptcha record);
+	int updateByPrimaryKeySelective(@Param("record") SysLoginInfo record);
 }

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--datasource=sky_dream-->
+<mapper namespace="com.maxvision.zfba.dao.ent.SysLoginInfoMapper">
+  <resultMap id="baseResultMap" type="com.maxvision.zfba.module.ent.SysLoginInfo">
+	<id column="s_info_id" jdbcType="VARCHAR" property="infoId" />
+	<result column="s_msg" jdbcType="VARCHAR" property="msg" />
+	<result column="s_login_id" jdbcType="VARCHAR" property="loginId" />
+	<result column="s_login_name" jdbcType="VARCHAR" property="loginName" />
+	<result column="s_os" jdbcType="VARCHAR" property="os" />
+	<result column="s_login_time" jdbcType="TIMESTAMP" property="loginTime" />
+	<result column="s_browser" jdbcType="VARCHAR" property="browser" />
+	<result column="s_ipaddr" jdbcType="VARCHAR" property="ipaddr" />
+	<result column="s_status" jdbcType="CHAR" property="status" />
+  </resultMap>
+  <sql id="exampleWhereClause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and (${criterion.condition})
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value${criterion.jdbcTypeDesc}}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value${criterion.jdbcTypeDesc}} and #{criterion.secondValue${criterion.jdbcTypeDesc}}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem${criterion.jdbcTypeDesc}}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="baseColumnList">
+  	 s.`msg` as s_msg
+  	, s.`login_id` as s_login_id
+  	, s.`login_name` as s_login_name
+  	, s.`os` as s_os
+  	, s.`login_time` as s_login_time
+  	, s.`browser` as s_browser
+  	, s.`info_id` as s_info_id
+  	, s.`ipaddr` as s_ipaddr
+  	, s.`status` as s_status
+  </sql>
+  <select id="getByPrimaryKey" parameterType="map" resultMap="baseResultMap">
+    select
+    <include refid="baseColumnList" />
+    from 
+    	`sys_login_info` s
+    where
+    	 s.`info_id` = #{infoId, jdbcType=VARCHAR}
+  </select>
+  <select id="selectByExample" parameterType="com.maxvision.core.mybatis.QueryExample" resultMap="baseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="baseColumnList" />
+    from 
+    	`sys_login_info` s
+    <if test="_parameter != null">
+      <include refid="exampleWhereClause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from `sys_login_info`
+    where
+    	 `info_id` = #{infoId, jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.maxvision.core.mybatis.QueryExample">
+    delete from `sys_login_info`
+    <if test="_parameter != null">
+      <include refid="exampleWhereClause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.maxvision.zfba.module.ent.SysLoginInfo">
+    insert into `sys_login_info` (
+		 `msg`
+		, `login_id`
+		, `login_name`
+		, `os`
+		, `login_time`
+		, `browser`
+		, `info_id`
+		, `ipaddr`
+		, `status`
+    )  values (
+		 #{msg,jdbcType=VARCHAR}
+		, #{loginId,jdbcType=VARCHAR}
+		, #{loginName,jdbcType=VARCHAR}
+		, #{os,jdbcType=VARCHAR}
+		, #{loginTime,jdbcType=TIMESTAMP}
+		, #{browser,jdbcType=VARCHAR}
+		, #{infoId,jdbcType=VARCHAR}
+		, #{ipaddr,jdbcType=VARCHAR}
+		, #{status,jdbcType=CHAR}
+    )
+  </insert>
+  <select id="countByExample" parameterType="com.maxvision.core.mybatis.QueryExample" resultType="java.lang.Integer">
+    select count(*) 
+    from 
+    	`sys_login_info` s
+    <if test="_parameter != null">
+      <include refid="exampleWhereClause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKey" parameterType="map">
+    update 
+    	`sys_login_info`
+    set 
+		`msg` = #{record.msg,jdbcType=VARCHAR}
+		 ,`login_id` = #{record.loginId,jdbcType=VARCHAR}
+		 ,`login_name` = #{record.loginName,jdbcType=VARCHAR}
+		 ,`os` = #{record.os,jdbcType=VARCHAR}
+		 ,`login_time` = #{record.loginTime,jdbcType=TIMESTAMP}
+		 ,`browser` = #{record.browser,jdbcType=VARCHAR}
+		 ,`ipaddr` = #{record.ipaddr,jdbcType=VARCHAR}
+		 ,`status` = #{record.status,jdbcType=CHAR}
+    where
+    	 `info_id` = #{record.infoId, jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="map">
+    update 
+    	`sys_login_info`
+    <set> 
+		<if test="record.msg != null">
+			`msg` = #{record.msg,jdbcType=VARCHAR},
+		</if>
+		<if test="record.loginId != null">
+			`login_id` = #{record.loginId,jdbcType=VARCHAR},
+		</if>
+		<if test="record.loginName != null">
+			`login_name` = #{record.loginName,jdbcType=VARCHAR},
+		</if>
+		<if test="record.os != null">
+			`os` = #{record.os,jdbcType=VARCHAR},
+		</if>
+		<if test="record.loginTime != null">
+			`login_time` = #{record.loginTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="record.browser != null">
+			`browser` = #{record.browser,jdbcType=VARCHAR},
+		</if>
+		<if test="record.ipaddr != null">
+			`ipaddr` = #{record.ipaddr,jdbcType=VARCHAR},
+		</if>
+		<if test="record.status != null">
+			`status` = #{record.status,jdbcType=CHAR},
+		</if>
+	</set>
+    where
+    	 `info_id` = #{record.infoId, jdbcType=VARCHAR}
+ </update>
+</mapper>

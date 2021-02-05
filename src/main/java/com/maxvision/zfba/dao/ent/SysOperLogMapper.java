@@ -3,12 +3,12 @@ package com.maxvision.zfba.dao.ent;
 import java.util.List;
 
 import com.maxvision.core.mybatis.QueryExample;
-import com.maxvision.zfba.module.ent.SysUserToken;
+import com.maxvision.zfba.module.ent.SysOperLog;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
-public interface SysUserTokenMapper {
+public interface SysOperLogMapper {
 	/**
 	 * count by example
 	 *
@@ -21,7 +21,7 @@ public interface SysUserTokenMapper {
 	 * delete by primary key
 	 * @return
 	 */
-	int deleteByPrimaryKey(@Param("userId")String userId);
+	int deleteByPrimaryKey(@Param("operId")String operId);
 	
 	/**
 	 * delete by example
@@ -37,14 +37,14 @@ public interface SysUserTokenMapper {
 	 * @param record
 	 * @return
 	 */
-	int insert(SysUserToken record);
+	int insert(SysOperLog record);
 
 	/**
 	 * select by primary key
 	 *
 	 * @return
 	 */
-	SysUserToken getByPrimaryKey(@Param("userId")String userId);
+	SysOperLog getByPrimaryKey(@Param("operId")String operId);
 	
 	/**
 	 * select by example
@@ -53,7 +53,7 @@ public interface SysUserTokenMapper {
 	 * @param rowBounds
 	 * @return
 	 */
-	List<SysUserToken> selectByExample(QueryExample example, RowBounds rowBounds);
+	List<SysOperLog> selectByExample(QueryExample example, RowBounds rowBounds);
 
 	/**
 	 * select by example
@@ -61,19 +61,19 @@ public interface SysUserTokenMapper {
 	 * @param example
 	 * @return
 	 */
-	List<SysUserToken> selectByExample(QueryExample example);
+	List<SysOperLog> selectByExample(QueryExample example);
 	
 	/**
 	 * update by primary key
 	 *
 	 * @return
 	 */
-	int updateByPrimaryKey(@Param("record") SysUserToken record);
+	int updateByPrimaryKey(@Param("record") SysOperLog record);
 	
 	/**
 	 * update by primary key selective
 	 *
 	 * @return
 	 */
-	int updateByPrimaryKeySelective(@Param("record") SysUserToken record);
+	int updateByPrimaryKeySelective(@Param("record") SysOperLog record);
 }

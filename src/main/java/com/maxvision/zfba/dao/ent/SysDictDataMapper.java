@@ -76,4 +76,20 @@ public interface SysDictDataMapper {
 	 * @return
 	 */
 	int updateByPrimaryKeySelective(@Param("record") SysDictData record);
+
+	/**
+	 * 根据字典类型、字典值查询具体值
+	 * @param dictType 字典类型
+	 * @param dictValue 字典值
+	 * @return SysDictData
+	 */
+	SysDictData queryByTypeAndValue(@Param("dictType")String dictType,@Param("dictValue") String dictValue);
+
+	/**
+	 * 更具类型何止查询字典标签
+	 * @param dictType 字典类型
+	 * @param dictValue 字典值
+	 * @return
+	 */
+	String queryLabel(@Param("dictType")String dictType,@Param("dictValue") String dictValue);
 }

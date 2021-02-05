@@ -22,7 +22,6 @@
 	</environments>
 
 	<mappers>
-		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysCaptcha.xml" />
 		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysDictData.xml" />
 		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysDictType.xml" />
 		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysMenu.xml" />
@@ -30,7 +29,8 @@
 		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysRole.xml" />
 		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysUser.xml" />
 		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysPost.xml" />
-		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysUserToken.xml" />
+		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysOperLog.xml" />
+		<mapper resource="com/maxvision/zfba/dao/mysql/ent/SysLoginInfo.xml" />
 	</mappers>
 
 </configuration>

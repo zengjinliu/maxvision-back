@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--datasource=sky_dream-->
+<mapper namespace="com.maxvision.zfba.dao.ent.SysOperLogMapper">
+  <resultMap id="baseResultMap" type="com.maxvision.zfba.module.ent.SysOperLog">
+	<id column="s_oper_id" jdbcType="VARCHAR" property="operId" />
+	<result column="s_oper_time" jdbcType="TIMESTAMP" property="operTime" />
+	<result column="s_login_id" jdbcType="VARCHAR" property="loginId" />
+	<result column="s_oper_param" jdbcType="VARCHAR" property="operParam" />
+	<result column="s_oper_name" jdbcType="VARCHAR" property="operName" />
+	<result column="s_oper_url" jdbcType="VARCHAR" property="operUrl" />
+	<result column="s_oper_action" jdbcType="VARCHAR" property="operAction" />
+	<result column="s_request_method" jdbcType="VARCHAR" property="requestMethod" />
+  </resultMap>
+  <sql id="exampleWhereClause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and (${criterion.condition})
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value${criterion.jdbcTypeDesc}}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value${criterion.jdbcTypeDesc}} and #{criterion.secondValue${criterion.jdbcTypeDesc}}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem${criterion.jdbcTypeDesc}}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="baseColumnList">
+  	 s.`oper_time` as s_oper_time
+  	, s.`login_id` as s_login_id
+  	, s.`oper_param` as s_oper_param
+  	, s.`oper_name` as s_oper_name
+  	, s.`oper_url` as s_oper_url
+  	, s.`oper_action` as s_oper_action
+  	, s.`oper_id` as s_oper_id
+  	, s.`request_method` as s_request_method
+  </sql>
+  <select id="getByPrimaryKey" parameterType="map" resultMap="baseResultMap">
+    select
+    <include refid="baseColumnList" />
+    from 
+    	`sys_oper_log` s
+    where
+    	 s.`oper_id` = #{operId, jdbcType=VARCHAR}
+  </select>
+  <select id="selectByExample" parameterType="com.maxvision.core.mybatis.QueryExample" resultMap="baseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="baseColumnList" />
+    from 
+    	`sys_oper_log` s
+    <if test="_parameter != null">
+      <include refid="exampleWhereClause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from `sys_oper_log`
+    where
+    	 `oper_id` = #{operId, jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.maxvision.core.mybatis.QueryExample">
+    delete from `sys_oper_log`
+    <if test="_parameter != null">
+      <include refid="exampleWhereClause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.maxvision.zfba.module.ent.SysOperLog">
+    insert into `sys_oper_log` (
+		 `oper_time`
+		, `login_id`
+		, `oper_param`
+		, `oper_name`
+		, `oper_url`
+		, `oper_action`
+		, `oper_id`
+		, `request_method`
+    )  values (
+		 #{operTime,jdbcType=TIMESTAMP}
+		, #{loginId,jdbcType=VARCHAR}
+		, #{operParam,jdbcType=VARCHAR}
+		, #{operName,jdbcType=VARCHAR}
+		, #{operUrl,jdbcType=VARCHAR}
+		, #{operAction,jdbcType=VARCHAR}
+		, #{operId,jdbcType=VARCHAR}
+		, #{requestMethod,jdbcType=VARCHAR}
+    )
+  </insert>
+  <select id="countByExample" parameterType="com.maxvision.core.mybatis.QueryExample" resultType="java.lang.Integer">
+    select count(*) 
+    from 
+    	`sys_oper_log` s
+    <if test="_parameter != null">
+      <include refid="exampleWhereClause" />
+    </if>
+  </select>
+  <update id="updateByPrimaryKey" parameterType="map">
+    update 
+    	`sys_oper_log`
+    set 
+		`oper_time` = #{record.operTime,jdbcType=TIMESTAMP}
+		 ,`login_id` = #{record.loginId,jdbcType=VARCHAR}
+		 ,`oper_param` = #{record.operParam,jdbcType=VARCHAR}
+		 ,`oper_name` = #{record.operName,jdbcType=VARCHAR}
+		 ,`oper_url` = #{record.operUrl,jdbcType=VARCHAR}
+		 ,`oper_action` = #{record.operAction,jdbcType=VARCHAR}
+		 ,`request_method` = #{record.requestMethod,jdbcType=VARCHAR}
+    where
+    	 `oper_id` = #{record.operId, jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="map">
+    update 
+    	`sys_oper_log`
+    <set> 
+		<if test="record.operTime != null">
+			`oper_time` = #{record.operTime,jdbcType=TIMESTAMP},
+		</if>
+		<if test="record.loginId != null">
+			`login_id` = #{record.loginId,jdbcType=VARCHAR},
+		</if>
+		<if test="record.operParam != null">
+			`oper_param` = #{record.operParam,jdbcType=VARCHAR},
+		</if>
+		<if test="record.operName != null">
+			`oper_name` = #{record.operName,jdbcType=VARCHAR},
+		</if>
+		<if test="record.operUrl != null">
+			`oper_url` = #{record.operUrl,jdbcType=VARCHAR},
+		</if>
+		<if test="record.operAction != null">
+			`oper_action` = #{record.operAction,jdbcType=VARCHAR},
+		</if>
+		<if test="record.requestMethod != null">
+			`request_method` = #{record.requestMethod,jdbcType=VARCHAR},
+		</if>
+	</set>
+    where
+    	 `oper_id` = #{record.operId, jdbcType=VARCHAR}
+ </update>
+</mapper>

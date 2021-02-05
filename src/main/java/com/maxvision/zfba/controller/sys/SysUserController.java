@@ -13,7 +13,6 @@ import com.maxvision.zfba.module.vo.ResultPage;
 import com.maxvision.zfba.module.vo.SysUserVo;
 import com.maxvision.zfba.pub.DBS;
 import com.maxvision.zfba.service.sys.SysUserService;
-import com.maxvision.zfba.util.HttpAjaxUtils;
 import com.maxvision.zfba.view.AjaxResultView;
 
 import java.util.List;

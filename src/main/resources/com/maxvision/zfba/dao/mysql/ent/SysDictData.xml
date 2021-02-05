@@ -149,4 +149,16 @@
     where
     	 `dict_code` = #{record.dictCode, jdbcType=VARCHAR}
  </update>
+
+
+    <select id="queryByTypeAndValue" resultMap="baseResultMap">
+        select <include refid="baseColumnList"/>
+        from sys_dict_data  s
+        where s.dict_type=#{dictType} and s.dict_value=#{dictValue}
+    </select>
+    <select id="queryLabel" resultType="string">
+        select sd.dict_label
+        from sys_dict_data  sd
+        where sd.dict_type=#{dictType} and sd.dict_value=#{dictValue}
+    </select>
 </mapper>

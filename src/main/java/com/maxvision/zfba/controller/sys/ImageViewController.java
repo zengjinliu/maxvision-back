@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * 系统图片展示和上传
  *
  * @author minte
  */
@@ -29,32 +30,32 @@ public class ImageViewController {
 
     /**
      * 图片路径展示
+     *
      * @param encryptPath
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "/show",method = RequestMethod.GET)
+    @RequestMapping(value = "/show", method = RequestMethod.GET)
     @NoLoginSupport
-    public View dealImage(@RequestParam("path") String encryptPath) throws Exception{
-        if(StringUtils.isNullOrEmpty(encryptPath)){
+    public View dealImage(@RequestParam("path") String encryptPath) throws Exception {
+        if (StringUtils.isNullOrEmpty(encryptPath)) {
             return new ImageView(null);
         }
         String path = AesEncryptUtils.decryptReplae(encryptPath);
         return new ImageView(path);
     }
 
-    @RequestMapping(value = "/upload",method = RequestMethod.POST)
-    public View upload(HttpServletRequest request, @RequestParam("file")UploadedFilePart file) throws Exception{
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    public View upload(HttpServletRequest request, @RequestParam("file") UploadedFilePart file) throws Exception {
         StringBuilder sb = new StringBuilder();
         sb.append(request.getScheme()).append("://")
                 .append(request.getServerName())
                 .append(":").append(request.getServerPort());
         String path = ImageUtils.saveImgageToLocal(file.get(), "upload");
-        Map<String,String> src = new HashMap<>(3);
+        Map<String, String> src = new HashMap<>(3);
         src.put("src", sb.toString() + "/sys/image/show?path=" + AesEncryptUtils.encryptReplace(path));
         return AjaxResultView.success(src);
     }
-
 
 
 }

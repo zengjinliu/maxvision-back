@@ -33,12 +33,14 @@ public class WebsocketDemo {
         //哪个询问室的哪个设备与服务端进行连接
         Map<String, List<String>> map = session.getRequestParameterMap();
         log.info("------------------->client key:{}",session.getId());
+        this.session = session;
         clients.put(session.getId(),this);
+        chat(session.getId(),"hello I am server");
     }
 
     @OnMessage
     public String onMessage(Session session, String message) {
-        System.out.println(message);
+        log.info("客户端id:{},消息:{}" ,session.getId(),message);
         return null;
     }
 
@@ -50,6 +52,22 @@ public class WebsocketDemo {
         }
     }
 
+    public synchronized void chat(String sessionId,String message) {
+        //接收端key
+        for (Map.Entry<String, WebsocketDemo> entry : clients.entrySet()) {
+            String key = entry.getKey();
+            WebsocketDemo demo = entry.getValue();
+            if(key.equals(sessionId)){
+                demo.sendMessage(message);
+            }
+        }
+    }
+
+
+
+
+
+
     @OnError
     public void onError(Session session, Throwable throwable) {
         //log.error(throwable);
@@ -60,11 +78,6 @@ public class WebsocketDemo {
         log.info("------------------->remove key:{}",session.getId());
         clients.remove(session.getId());
     }
-
-
-
-
-
 
     public Session getSession() {
         return session;

@@ -19,15 +19,16 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 参考代码规范(阿里编码规约)
  * 1.采用面向接口变成的模式，主要业务封装在serviceImpl中(单个方法代码过长，请进行封装处理，尽量做到一个方法处理一件事情)，
- *   控制层尽量展示数据和视图</br>
+ * 控制层尽量展示数据和视图</br>
  * 2.接口定义务必要描述接口用途以及对入参约束进行详细描述，例如入参为Map<String,Object>请务必描述键值<br/>
  * 3.在if-else重要逻辑切换处请进行注释描述</br>
  * 4.全局请尽量使用javadoc注释（代码自动生成属性除外）</br>
  * 5.全局尽量不要使用魔法值，例如，if("1".equals(obj)),尽量使用常量描述</br>
  * 6.对于代码重复使用的地方尽量抽象出来，做到代码复用</br>
  * 6.所有请求都是返回View的实例,如果返回json数据格式，统一使用AjaxResultView实例</br>
- *   如果返回的是视图，统一使用FreeMarkerView实例
+ * 如果返回的是视图，统一使用FreeMarkerView实例
  * 登陆控制器
+ *
  * @author minte
  */
 @Controller
@@ -38,17 +39,16 @@ public class LoginController {
     private SysLoginService sysLoginService;
 
     @NoLoginSupport
-    @RequestMapping(value = {"/login"}, method = RequestMethod.POST,action = "")
+    @RequestMapping(value = {"/login"}, method = RequestMethod.POST, action = "登陆")
     public View doLogin(@MapperParam(DBS.datasource) MapperContext mc,
                         @RequestBody LoginFormDto formDto,
                         HttpServletRequest request,
                         HttpServletResponse response) {
-        View view = sysLoginService.doLogin(mc, formDto,request,response);
-        return view;
+        return sysLoginService.doLogin(mc, formDto, request, response);
     }
 
 
-    @RequestMapping(value = "/logout",method = RequestMethod.GET)
+    @RequestMapping(value = "/logout", method = RequestMethod.GET, action = "登出")
     public View doLogin(@MapperParam(DBS.datasource) MapperContext mc,
                         HttpServletRequest request) {
         sysLoginService.logout(request);
@@ -56,13 +56,11 @@ public class LoginController {
     }
 
 
-    @RequestMapping(value = {"/checkPwd"}, method = RequestMethod.POST,action = "修改密码")
+    @RequestMapping(value = {"/checkPwd"}, method = RequestMethod.POST, action = "修改密码")
     public View checkPwd(@MapperParam(DBS.datasource) MapperContext mc,
-                        @RequestBody SysUser sysUser) {
-        View view = sysLoginService.checkPwd(mc, sysUser);
-        return view;
+                         @RequestBody SysUser sysUser) {
+        return sysLoginService.checkPwd(mc, sysUser);
     }
-
 
 
 }

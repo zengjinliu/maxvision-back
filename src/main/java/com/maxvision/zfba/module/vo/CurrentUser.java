@@ -35,9 +35,6 @@ public class CurrentUser implements Serializable {
      */
     private SysUser user;
 
-
-
-
     /**
      * 登陆成功标识
      */
@@ -48,6 +45,7 @@ public class CurrentUser implements Serializable {
         this.perms = builder.perms;
         this.user = builder.user;
         this.loginId = builder.loginId;
+        this.menuTree = builder.menuTree;
     }
 
     public static Builder builder() {

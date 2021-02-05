@@ -37,12 +37,6 @@ public class SysDictTypeController {
         return new JsonView(page);
     }
 
-    @PermissionCode("sys_dict_type_del")
-    @RequestMapping(value = "/del",method = RequestMethod.POST,action = "刪除字典类型项")
-    public View delete(@MapperParam(DBS.datasource) MapperContext mc, @RequestBody List<String> dictIds) {
-        int delete = sysDictTypeService.delete(mc, dictIds);
-        return AjaxResultView.response(delete);
-    }
 
     @PermissionCode("sys_dict_type_add")
     @RequestMapping(value = "/add", method = RequestMethod.POST, action = "更新字典类型项")
@@ -52,19 +46,27 @@ public class SysDictTypeController {
         return AjaxResultView.response(save);
     }
 
-    @RequestMapping(value = "/id")
-    public View id(@MapperParam(DBS.datasource) MapperContext mc, @RequestParam("dictId") String dictId) {
-        SysDictType dict = sysDictTypeService.queryById(mc, dictId);
-        return AjaxResultView.success(dict);
+    @PermissionCode("sys_dict_type_del")
+    @RequestMapping(value = "/del", method = RequestMethod.POST, action = "刪除字典类型项")
+    public View delete(@MapperParam(DBS.datasource) MapperContext mc, @RequestBody List<String> dictIds) {
+        int delete = sysDictTypeService.delete(mc, dictIds);
+        return AjaxResultView.response(delete);
     }
 
-    @PermissionCode("sys_dict_type_edit")
+    @PermissionCode("sys_dict_type_update")
     @RequestMapping(value = "/update", method = RequestMethod.POST, action = "更新字典类型项")
     public View update(@MapperParam(DBS.datasource) MapperContext mc,
                        @RequestBody SysDictType dict) {
         int update = sysDictTypeService.update(mc, dict);
         return AjaxResultView.response(update);
     }
+
+    @RequestMapping(value = "/id",method = RequestMethod.GET)
+    public View id(@MapperParam(DBS.datasource) MapperContext mc, @RequestParam("dictId") String dictId) {
+        SysDictType dict = sysDictTypeService.queryById(mc, dictId);
+        return AjaxResultView.success(dict);
+    }
+
 
     @RequestMapping(value = "/queryAll", method = RequestMethod.GET)
     public View queryAll(@MapperParam(DBS.datasource) MapperContext mc) {
